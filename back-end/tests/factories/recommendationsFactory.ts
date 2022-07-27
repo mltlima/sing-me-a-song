@@ -1,4 +1,4 @@
-export default function recomendationsFactory() {
+export default function recommendationsFactory() {
     const recommendations = [
       {
         id: 1,

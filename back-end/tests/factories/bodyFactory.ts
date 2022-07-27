@@ -10,9 +10,8 @@ export default function bodyFactory() {
         },
         {
           name: "João Mineiro e Marciano - Seu Amor Ainda É Tudo",
-          youtubeLink:
-            "https://www.youtube.com/watch?v=aGuN_WuuSzs",
-          score: 112,
+          youtubeLink: "https://www.youtube.com/watch?v=aGuN_WuuSzs",
         },
     ]
+    return recomendations;
 }
