@@ -15,26 +15,26 @@ beforeEach(async () => {
 describe("POST /recomendations", () => {
     it("valid body", async () => {
         const body = bodyFactory();
-        const response = await agent.post("/recomendations").send(body[0]);
+        const response = await agent.post("/recommendations").send(body[0]);
         expect(response.status).toEqual(201);
     })
 
     it("invalid body - no name", async () => {
         const body = bodyFactory();
         delete body[0].name;
-        const response = await agent.post("/recomendations").send(body[0]);
+        const response = await agent.post("/recommendations").send(body[0]);
         expect(response.status).toEqual(422);
     });
 
     it("invalid body - no youtubeLink", async () => {
         const body = bodyFactory();
         delete body[0].youtubeLink;
-        const response = await agent.post("/recomendations").send(body[0]);
+        const response = await agent.post("/recommendations").send(body[0]);
         expect(response.status).toEqual(422);
     });
 
     it("no body", async () => {
-        const response = await agent.post("/recomendations");
+        const response = await agent.post("/recommendations");
         expect(response.status).toEqual(422);
     });
 })
