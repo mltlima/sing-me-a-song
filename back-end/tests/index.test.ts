@@ -12,6 +12,19 @@ beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE recommendations`;
 });
 
+describe("GET /recommendations", () => {
+    it("should return a list of recommendations", async () => {
+        const recommendations = bodyFactory();
+        await prisma.recommendation.create({ data: recommendations[0] });
+
+        const response = await agent.get("/recommendations");
+
+        expect(response.status).toEqual(200);
+        expect(response.body.length).toBeGreaterThan(0);
+        expect(response.body.length).not.toBeNull();
+    });
+})
+
 describe("POST /recomendations", () => {
     it("valid body", async () => {
         const body = bodyFactory();
