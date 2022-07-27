@@ -4,6 +4,7 @@ import supertest from "supertest";
 import { prisma } from "../src/database.js";
 import app from "../src/app.js";
 import bodyFactory from "./factories/bodyFactory.js";
+import recommendationFactory from "./factories/recommendationsFactory.js";
 
 
 const agent = supertest(app);
@@ -22,6 +23,24 @@ describe("GET /recommendations", () => {
         expect(response.status).toEqual(200);
         expect(response.body.length).toBeGreaterThan(0);
         expect(response.body.length).not.toBeNull();
+    });
+})
+
+describe("GET /recommendations/random", () => {
+    it("should return a random recommendation", async () => {
+        const recommendations = bodyFactory();
+        const data = await prisma.recommendation.create({ data: recommendations[0] });
+        const response = await agent.get("/recommendations/random");
+        expect(response.body).toEqual(data);
+    });
+})
+
+describe("GET /recommendations/top/:amount", () => {
+    it("should return a list of top recommendations", async () => {
+        const recommendations = recommendationFactory();
+        await prisma.recommendation.createMany({ data: [{...recommendations[0]}, {...recommendations[1]}, {...recommendations[2]}] });
+        const response = await agent.get("/recommendations/top/2");
+        expect(response.body.length).toEqual(2);
     });
 })
 
