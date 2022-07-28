@@ -71,6 +71,34 @@ describe("POST /recomendations", () => {
     });
 })
 
+describe("POST /recomendations/:id/upvote", () => {
+    it("valid upvote", async () => {
+        const body = bodyFactory();
+        const recommendation = await prisma.recommendation.create({ data: body[0] });
+        const response = await agent.post(`/recommendations/${recommendation.id}/upvote`);
+        expect(response.status).toEqual(200);
+    });
+
+    it("invalid id", async () => {
+        const response = await agent.post("/recommendations/123/upvote");
+        expect(response.status).toEqual(404);
+    });
+})
+
+describe("POST /recomendations/:id/downvote", () => {
+    it("valid downvote", async () => {
+        const body = bodyFactory();
+        const recommendation = await prisma.recommendation.create({ data: body[0] });
+        const response = await agent.post(`/recommendations/${recommendation.id}/downvote`);
+        expect(response.status).toEqual(200);
+    });
+
+    it("invalid id", async () => {
+        const response = await agent.post("/recommendations/123/downvote");
+        expect(response.status).toEqual(404);
+    });
+})
+
 
 
 
