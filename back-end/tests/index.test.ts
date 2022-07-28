@@ -13,6 +13,9 @@ beforeEach(async () => {
     await prisma.$executeRaw`TRUNCATE TABLE recommendations`;
 });
 
+
+//----------------------------------------------------------------------------------------------------------------------
+
 describe("GET /recommendations", () => {
     it("should return a list of recommendations", async () => {
         const recommendations = bodyFactory();
@@ -26,6 +29,8 @@ describe("GET /recommendations", () => {
     });
 })
 
+//----------------------------------------------------------------------------------------------------------------------
+
 describe("GET /recommendations/random", () => {
     it("should return a random recommendation", async () => {
         const recommendations = bodyFactory();
@@ -35,6 +40,8 @@ describe("GET /recommendations/random", () => {
     });
 })
 
+//----------------------------------------------------------------------------------------------------------------------
+
 describe("GET /recommendations/top/:amount", () => {
     it("should return a list of top recommendations", async () => {
         const recommendations = recommendationFactory();
@@ -43,6 +50,8 @@ describe("GET /recommendations/top/:amount", () => {
         expect(response.body.length).toEqual(2);
     });
 })
+
+//----------------------------------------------------------------------------------------------------------------------
 
 describe("POST /recomendations", () => {
     it("valid body", async () => {
@@ -71,6 +80,19 @@ describe("POST /recomendations", () => {
     });
 })
 
+//----------------------------------------------------------------------------------------------------------------------
+
+describe("GET /recommendations/:id", () => {
+    it("find recommendation by id", async () => {
+        const body = bodyFactory();
+        const data = await prisma.recommendation.create({ data: body[0] });
+        const response = await agent.get(`/recommendations/${data.id}`);
+        expect(response.body).toEqual(data);
+    });
+})
+
+//----------------------------------------------------------------------------------------------------------------------
+
 describe("POST /recomendations/:id/upvote", () => {
     it("valid upvote", async () => {
         const body = bodyFactory();
@@ -84,6 +106,8 @@ describe("POST /recomendations/:id/upvote", () => {
         expect(response.status).toEqual(404);
     });
 })
+
+//----------------------------------------------------------------------------------------------------------------------
 
 describe("POST /recomendations/:id/downvote", () => {
     it("valid downvote", async () => {
@@ -99,8 +123,7 @@ describe("POST /recomendations/:id/downvote", () => {
     });
 })
 
-
-
+//----------------------------------------------------------------------------------------------------------------------
 
 afterAll(async () => {
     await prisma.$disconnect();
