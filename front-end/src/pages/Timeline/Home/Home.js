@@ -24,7 +24,7 @@ export default function Home() {
       alert("Error creating recommendation!");
     }
   }, [creatingRecommendationError]);
-
+  
   if ((loadingRecommendations && !recommendations) || !recommendations) {
     return <div>Loading...</div>;
   }

@@ -26,11 +26,11 @@ describe('downvote /', () => {
     cy.resetDatabase();
   });
 
-  it('Should test upvote rote', () => {
+  it('Should test downvote rote', () => {
     const recommendation = recommendationFactory();
     cy.visit('localhost:3000');
     cy.intercept('POST', '/recommendations').as('getRecommendations');
-    cy.insertRecommendation(recommendation[0]);
+    cy.insertRecommendation(recommendation);
     cy.contains(recommendation.name);
     cy.contains(recommendation.name)
       .get('article')

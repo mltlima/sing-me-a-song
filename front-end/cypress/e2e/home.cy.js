@@ -13,7 +13,7 @@ describe('Home /', () => {
       cy.intercept('POST', '/recommendations').as('getRecommendations');
       cy.insertRecommendation(recommendation);
       cy.contains(recommendation.name);
-      cy.wait('@getRecommendations');
+      //cy.wait('@getRecommendations');
       cy.end();
   });
 })
